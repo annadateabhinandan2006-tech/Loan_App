@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+    <h1 style="color: blue; text-align: center;">LendSwift Digital Lending</h1>
+
+    <form id="loanForm">
+        <div id="step-1">
+            <h2>Step 1: Loan Type</h2>
+            <select name="loanType">
+                <option value="education">Education Loan (1-6 lakh)</option>
+                <option value="home">Home Loan (5-20 lakh)</option>
+                <option value="business">Business Loan (50 lakh-1cr)</option>
+            </select><br><br>
+            <input type="number" placeholder="Required Loan Amount (INR)"><br><br>
+            <select name="tenure">
+                <option>12 Month</option><option>24 Month</option>
+                <option>36 Month</option><option>60 Month</option>
+            </select>
+        </div>
+
+        <div id="step-2" style="display:none;">
+            <h2>Step 2: Personal</h2>
+            <input type="text" placeholder="First name"><input type="text" placeholder="Middle Name"><input type="text" placeholder="Last Name"><br>
+            <input type="text" placeholder="Address permanent"><input type="text" placeholder="Current address"><br>
+            <input type="text" placeholder="Phone number (10 digit)" maxlength="10"><br>
+            <input type="text" placeholder="Whatsapp number"><br>
+            <input type="email" placeholder="Email address">
+        </div>
+
+        <div id="step-3" style="display:none;">
+            <h2>Step 3: KYC</h2>
+            <select>
+                <option>Enter mobile number and adhar number</option>
+                <option>Email Id and pan number</option>
+            </select><br>
+            <p>Verify via:</p>
+            <input type="radio" name="verify">SMS <input type="radio" name="verify">Mail <input type="radio" name="verify">Whatsapp
+        </div>
+
+        <div id="step-4" style="display:none;">
+            <h2>Step 4: Address</h2>
+            <input type="text" placeholder="Address permanent"><br>
+            <input type="text" placeholder="Current address">
+        </div>
+
+        <div id="step-5" style="display:none;">
+            <h2>Step 5: Income</h2>
+            <select>
+                <option>Home Loan (Beyond 10 lakh)</option>
+                <option>Education Loan (Beyond 8 lakh)</option>
+                <option>Business Loan (Beyond 26 lakh)</option>
+            </select><br>
+            <input type="number" placeholder="Income Amount">
+        </div>
+
+        <div id="step-6" style="display:none;">
+            <h2>Step 6: Co-Applicant</h2>
+            <input type="checkbox"> Yes <input type="checkbox"> No
+        </div>
+
+        <div id="step-7" style="display:none;">
+            <h2>Step 7: Documents</h2>
+            <select>
+                <option>Education: 10th, 12th marksheet, college fees</option>
+                <option>Business: Business licence</option>
+                <option>Home: Lite bill, land tax report (last 3 month)</option>
+            </select><br>
+            <input type="file" multiple>
+        </div>
+
+        <div id="step-8" style="display:none;">
+            <h2>Step 8: Review</h2>
+            <p>Check all information here...</p>
+            <button type="button" onclick="alert('Successfully completed!')">Submit</button>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <button type="button" id="prevBtn" onclick="prev()" style="display:none; background: blue; color: white;">Previous</button>
+            <button type="button" id="nextBtn" onclick="next()" style="background: blue; color: white;">Next</button>
+        </div>
+    </form>
+
+    <script>
+        let current = 1;
+        function next() {
+            document.getElementById('step-'+current).style.display = 'none';
+            current++;
+            document.getElementById('step-'+current).style.display = 'block';
+            toggle();
+        }
+        function prev() {
+            document.getElementById('step-'+current).style.display = 'none';
+            current--;
+            document.getElementById('step-'+current).style.display = 'block';
+            toggle();
+        }
+        function toggle() {
+            document.getElementById('prevBtn').style.display = (current > 1) ? 'inline' : 'none';
+            document.getElementById('nextBtn').style.display = (current < 8) ? 'inline' : 'none';
+        }
+    </script>
+</body>
+</html> 

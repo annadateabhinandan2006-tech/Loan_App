@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LendSwift - Digital Lending Portal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-wrapper">
+        <!-- Application Header -->
+        <header class="app-header">
+            <span class="brand-badge">Instant Loan Approval Engine</span>
+            <h1>LendSwift Digital Lending</h1>
+            <p>Fast, transparent, and seamless loan application process</p>
+        </header>
+
+        <!-- Multi-Step Progress Tracker -->
+        <div class="progress-container">
+            <div class="step-tracker">
+                <div class="step-tracker-fill" id="progressFill" style="width: 0%;"></div>
+                <div class="step-item active" id="indicator-1">
+                    <div class="step-circle">1</div>
+                    <span class="step-name">Loan Type</span>
+                </div>
+                <div class="step-item" id="indicator-2">
+                    <div class="step-circle">2</div>
+                    <span class="step-name">Personal</span>
+                </div>
+                <div class="step-item" id="indicator-3">
+                    <div class="step-circle">3</div>
+                    <span class="step-name">KYC</span>
+                </div>
+                <div class="step-item" id="indicator-4">
+                    <div class="step-circle">4</div>
+                    <span class="step-name">Address</span>
+                </div>
+                <div class="step-item" id="indicator-5">
+                    <div class="step-circle">5</div>
+                    <span class="step-name">Income</span>
+                </div>
+                <div class="step-item" id="indicator-6">
+                    <div class="step-circle">6</div>
+                    <span class="step-name">Co-App</span>
+                </div>
+                <div class="step-item" id="indicator-7">
+                    <div class="step-circle">7</div>
+                    <span class="step-name">Docs</span>
+                </div>
+                <div class="step-item" id="indicator-8">
+                    <div class="step-circle">8</div>
+                    <span class="step-name">Review</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Body -->
+        <div class="form-body">
+            <form id="loanForm" onsubmit="event.preventDefault();">
+
+                <!-- STEP 1: Loan Type -->
+                <div class="form-step active" id="step-1">
+                    <div class="step-heading">
+                        <h2>Step 1: Select Loan Product & Amount</h2>
+                        <span class="step-tag">Step 1 of 8</span>
+                    </div>
+
+                    <div class="loan-options">
+                        <div class="loan-card selected" id="card-education" onclick="selectLoanType('education')">
+                            <input type="radio" name="loanType" value="education" checked>
+                            <div class="icon">🎓</div>
+                            <div class="title">Education Loan</div>
+                            <div class="range">₹1 Lakh - ₹6 Lakh (9.5% p.a.)</div>
+                        </div>
+                        <div class="loan-card" id="card-home" onclick="selectLoanType('home')">
+                            <input type="radio" name="loanType" value="home">
+                            <div class="icon">🏠</div>
+                            <div class="title">Home Loan</div>
+                            <div class="range">₹5 Lakh - ₹1 Crore (8.5% p.a.)</div>
+                        </div>
+                        <div class="loan-card" id="card-business" onclick="selectLoanType('business')">
+                            <input type="radio" name="loanType" value="business">
+                            <div class="icon">💼</div>
+                            <div class="title">Business Loan</div>
+                            <div class="range">₹50 Lakh - ₹1 Crore (12.0% p.a.)</div>
+                        </div>
+                    </div>
+                    <div class="error-text" id="loanTypeError"></div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Required Loan Amount <span class="required">*</span></label>
+                            <div class="input-prefix">
+                                <span>₹</span>
+                                <input type="number" id="loanAmount" placeholder="e.g. 300000" value="300000">
+                            </div>
+                            <div class="error-text" id="loanAmountError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tenure Duration <span class="required">*</span></label>
+                            <select id="loanTenure">
+                                <option value="12">12 Months (1 Year)</option>
+                                <option value="24">24 Months (2 Years)</option>
+                                <option value="36" selected>36 Months (3 Years)</option>
+                                <option value="60">60 Months (5 Years)</option>
+                                <option value="120">120 Months (10 Years)</option>
+                            </select>
+                            <div class="error-text" id="loanTenureError"></div>
+                        </div>
+                    </div>
+
+                    <div class="calc-preview">
+                        <div>
+                            <div class="calc-title">Estimated Monthly Repayment (EMI)</div>
+                            <div style="font-size: 11px; color: #4A5568;">Inclusive of reducing balance interest rate</div>
+                        </div>
+                        <div class="calc-amount" id="emiDisplay">₹9,610 / mo</div>
+                    </div>
+                </div>
+
+                <!-- STEP 2: Personal Information -->
+                <div class="form-step" id="step-2">
+                    <div class="step-heading">
+                        <h2>Step 2: Personal Information</h2>
+                        <span class="step-tag">Step 2 of 8</span>
+                    </div>
+
+                    <div class="grid-3">
+                        <div class="form-group">
+                            <label>First Name <span class="required">*</span></label>
+                            <input type="text" id="firstName" placeholder="e.g. Rahul">
+                            <div class="error-text" id="firstNameError"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Middle Name</label>
+                            <input type="text" id="middleName" placeholder="Optional">
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name <span class="required">*</span></label>
+                            <input type="text" id="lastName" placeholder="e.g. Sharma">
+                            <div class="error-text" id="lastNameError"></div>
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Mobile Number (10 digits) <span class="required">*</span></label>
+                            <div class="input-prefix">
+                                <span>+91</span>
+                                <input type="text" id="phoneNumber" maxlength="10" placeholder="9876543210">
+                            </div>
+                            <div class="error-text" id="phoneNumberError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>WhatsApp Number</label>
+                            <div class="input-prefix">
+                                <span>+91</span>
+                                <input type="text" id="whatsappNumber" maxlength="10" placeholder="Optional">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Email Address <span class="required">*</span></label>
+                            <input type="email" id="emailAddress" placeholder="rahul.sharma@example.com">
+                            <div class="error-text" id="emailAddressError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Date of Birth</label>
+                            <input type="date" id="dob" value="1995-05-15">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 3: KYC Verification -->
+                <div class="form-step" id="step-3">
+                    <div class="step-heading">
+                        <h2>Step 3: Identity & KYC Verification</h2>
+                        <span class="step-tag">Step 3 of 8</span>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>KYC Identification Type <span class="required">*</span></label>
+                            <select id="kycType">
+                                <option value="aadhaar">Aadhaar Card (12 Digits)</option>
+                                <option value="pan">Permanent Account Number (PAN - 10 Chars)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Identification Number <span class="required">*</span></label>
+                            <input type="text" id="kycNumber" placeholder="Enter Aadhaar (12 digits) or PAN (10 chars)">
+                            <div class="error-text" id="kycNumberError"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Select OTP Verification Channel <span class="required">*</span></label>
+                        <div class="radio-pill-group">
+                            <label class="radio-pill">
+                                <input type="radio" name="otpChannel" value="sms" checked>
+                                <span>📱 SMS on Mobile</span>
+                            </label>
+                            <label class="radio-pill">
+                                <input type="radio" name="otpChannel" value="email">
+                                <span>✉️ Email OTP</span>
+                            </label>
+                            <label class="radio-pill">
+                                <input type="radio" name="otpChannel" value="whatsapp">
+                                <span>💬 WhatsApp</span>
+                            </label>
+                        </div>
+                        <div class="error-text" id="otpChannelError"></div>
+                    </div>
+                </div>
+
+                <!-- STEP 4: Address Details -->
+                <div class="form-step" id="step-4">
+                    <div class="step-heading">
+                        <h2>Step 4: Residential Address</h2>
+                        <span class="step-tag">Step 4 of 8</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Permanent Address <span class="required">*</span></label>
+                        <textarea id="permAddress" rows="2" placeholder="Flat/House No., Building, Street, Area"></textarea>
+                        <div class="error-text" id="permAddressError"></div>
+                    </div>
+
+                    <div class="grid-3">
+                        <div class="form-group">
+                            <label>City <span class="required">*</span></label>
+                            <input type="text" id="city" placeholder="e.g. Mumbai">
+                            <div class="error-text" id="cityError"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>State <span class="required">*</span></label>
+                            <input type="text" id="state" placeholder="e.g. Maharashtra">
+                            <div class="error-text" id="stateError"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Pincode (6 digits) <span class="required">*</span></label>
+                            <input type="text" id="pincode" maxlength="6" placeholder="400001">
+                            <div class="error-text" id="pincodeError"></div>
+                        </div>
+                    </div>
+
+                    <label class="toggle-box">
+                        <input type="checkbox" id="sameAsPermanent">
+                        <span>Current residential address is same as permanent address</span>
+                    </label>
+
+                    <div class="form-group">
+                        <label>Current Address</label>
+                        <textarea id="currentAddress" rows="2" placeholder="Enter current address if different from permanent"></textarea>
+                    </div>
+                </div>
+
+                <!-- STEP 5: Income & Employment -->
+                <div class="form-step" id="step-5">
+                    <div class="step-heading">
+                        <h2>Step 5: Income & Financial Profile</h2>
+                        <span class="step-tag">Step 5 of 8</span>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Employment Type <span class="required">*</span></label>
+                            <select id="empType">
+                                <option value="salaried">Salaried Employee</option>
+                                <option value="self-employed">Self-Employed Professional</option>
+                                <option value="business">Business Owner / Partner</option>
+                                <option value="student">Student (Education Loan)</option>
+                            </select>
+                            <div class="error-text" id="empTypeError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Employer / Company / Institute Name</label>
+                            <input type="text" id="employerName" placeholder="e.g. Infosys Ltd / ABC Business">
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Monthly Net Income <span class="required">*</span></label>
+                            <div class="input-prefix">
+                                <span>₹</span>
+                                <input type="number" id="monthlyIncome" placeholder="e.g. 65000">
+                            </div>
+                            <div class="error-text" id="monthlyIncomeError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Existing Total Monthly EMIs (if any)</label>
+                            <div class="input-prefix">
+                                <span>₹</span>
+                                <input type="number" id="existingEmi" placeholder="0" value="0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 6: Co-Applicant Details -->
+                <div class="form-step" id="step-6">
+                    <div class="step-heading">
+                        <h2>Step 6: Co-Applicant / Guarantor</h2>
+                        <span class="step-tag">Step 6 of 8</span>
+                    </div>
+
+                    <label class="toggle-box">
+                        <input type="checkbox" id="hasCoApplicant">
+                        <span>Include Co-Applicant or Guarantor (Improves loan eligibility)</span>
+                    </label>
+
+                    <div id="coAppDetails" style="display: none;">
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label>Co-Applicant Full Name <span class="required">*</span></label>
+                                <input type="text" id="coAppName" placeholder="e.g. Sunita Sharma">
+                                <div class="error-text" id="coAppNameError"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Relationship with Applicant</label>
+                                <select id="coAppRelation">
+                                    <option value="parent">Parent</option>
+                                    <option value="spouse">Spouse</option>
+                                    <option value="sibling">Sibling</option>
+                                    <option value="other">Other Relative</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label>Co-Applicant Monthly Income <span class="required">*</span></label>
+                                <div class="input-prefix">
+                                    <span>₹</span>
+                                    <input type="number" id="coAppIncome" placeholder="e.g. 45000">
+                                </div>
+                                <div class="error-text" id="coAppIncomeError"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Co-Applicant PAN Card</label>
+                                <input type="text" id="coAppPan" placeholder="ABCDE1234F" maxlength="10">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 7: Document Vault -->
+                <div class="form-step" id="step-7">
+                    <div class="step-heading">
+                        <h2>Step 7: Document Vault</h2>
+                        <span class="step-tag">Step 7 of 8</span>
+                    </div>
+
+                    <p style="font-size: 13px; color: var(--neutral-gray); margin-bottom: 18px;">
+                        Upload the required documents tailored to your selected loan product for fast-track processing:
+                    </p>
+
+                    <div id="docUploadList"></div>
+                </div>
+
+                <!-- STEP 8: Final Review & Submission -->
+                <div class="form-step" id="step-8">
+                    <div class="step-heading">
+                        <h2>Step 8: Application Review & Submission</h2>
+                        <span class="step-tag">Final Step</span>
+                    </div>
+
+                    <div class="review-grid" id="reviewContent"></div>
+
+                    <div class="terms-box" style="margin-top: 20px; background: rgba(35, 17, 65, 0.7); border: 1px solid rgba(168, 85, 247, 0.35); padding: 14px 18px; border-radius: 10px;">
+                        <label style="display: flex; gap: 12px; align-items: flex-start; cursor: pointer; font-size: 13px; color: var(--purple-light);">
+                            <input type="checkbox" id="termsAgree" style="margin-top: 3px; accent-color: var(--purple-neon); width: 18px; height: 18px;">
+                            <span>I declare that all the information and uploaded documents provided above are genuine, accurate, and complete. I authorize LendSwift to conduct digital KYC and credit verification.</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Form Controls & Actions -->
+                <div class="form-footer">
+                    <button type="button" class="btn btn-secondary" id="prevBtn" onclick="prevStep()" style="display: none;">
+                        ← Previous
+                    </button>
+                    <div style="margin-left: auto; display: flex; gap: 12px;">
+                        <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextStep()">
+                            Next Step →
+                        </button>
+                        <button type="button" class="btn btn-success" id="submitBtn" onclick="submitLoanApplication()" style="display: none;">
+                            ✓ Confirm & Submit Application
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-content">
+            <div class="modal-icon">✓</div>
+            <h2 style="color: var(--purple-bright); font-size: 24px; margin-bottom: 8px; text-shadow: 0 0 15px rgba(192, 132, 252, 0.4);">Application Submitted!</h2>
+            <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 20px;">
+                Your loan request has been successfully queued for instant automated underwriting.
+            </p>
+            <div style="background: rgba(22, 14, 42, 0.9); border: 1px solid rgba(168, 85, 247, 0.4); padding: 16px; border-radius: 12px; margin-bottom: 22px; box-shadow: 0 0 20px rgba(168, 85, 247, 0.15);">
+                <div style="font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Application Reference ID</div>
+                <div style="font-size: 22px; font-weight: 800; color: var(--purple-neon); letter-spacing: 1px; margin-top: 4px; text-shadow: 0 0 12px rgba(217, 70, 239, 0.5);" id="refNumberDisplay">LS-2026-928174</div>
+            </div>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 24px;">
+                Our digital loan officer will reach out within 24 hours on your registered mobile number and email.
+            </p>
+            <button type="button" class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="resetApplication()">
+                Start New Application
+            </button>
+        </div>
+    <!-- AI Chatbot Floating Trigger Button -->
+    <button type="button" class="chat-toggle-btn" id="chatToggleBtn" aria-label="Open AI Loan Assistant">
+        <span class="chat-toggle-icon">💬</span>
+        <span class="chat-toggle-label">Ask Loan AI</span>
+        <span class="chat-toggle-badge">Docs & Queries</span>
+    </button>
+
+    <!-- AI Chatbot Modal Container -->
+    <div class="chatbox-modal" id="chatboxModal">
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <div class="chat-avatar">⚡</div>
+                <div class="chat-header-text">
+                    <h3>LendSwift AI Assistant</h3>
+                    <div class="chat-status">Online • Instant Query & Doc Solver</div>
+                </div>
+            </div>
+            <button type="button" class="chat-close-btn" id="chatCloseBtn" title="Close Chat">✕</button>
+        </div>
+
+        <div class="chat-doc-banner">
+            <span>⚡ Missing mandatory paperwork?</span>
+            <button type="button" onclick="showAllAlternativeDocs()">Check Alternatives</button>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-bubble bot">
+                <p>👋 Hello! I am your <strong>LendSwift Loan Assistant</strong>.</p>
+                <p style="margin-top: 6px; font-size: 12px; color: var(--purple-light);">
+                    Need help choosing loan products or don't have certain mandatory documents like <strong>Salary Slips, ITR, Marksheets, or Utility Bills</strong>? Ask me for verified alternative documents!
+                </p>
+            </div>
+        </div>
+
+        <!-- Quick Question Chips -->
+        <div class="chat-chips">
+            <button type="button" class="chat-chip" onclick="sendSuggestedQuery('Alternative for Salary Slip?')">📄 No Salary Slip?</button>
+            <button type="button" class="chat-chip" onclick="sendSuggestedQuery('Alternative for ITR in Business Loan?')">📊 No ITR / Tax?</button>
+            <button type="button" class="chat-chip" onclick="sendSuggestedQuery('Alternative for Education Marksheets?')">🎓 Missing Marksheets?</button>
+            <button type="button" class="chat-chip" onclick="sendSuggestedQuery('Alternative for Electricity Bill?')">🏠 No Electricity Bill?</button>
+            <button type="button" class="chat-chip" onclick="sendSuggestedQuery('What are the interest rates?')">📈 Interest Rates</button>
+            <button type="button" class="chat-chip" onclick="sendSuggestedQuery('How long does approval take?')">⚡ Approval Time</button>
+        </div>
+
+        <!-- Chat Input Bar -->
+        <div class="chat-input-row">
+            <input type="text" id="chatInputField" placeholder="Type your query or document question..." autocomplete="off">
+            <button type="button" class="chat-send-btn" id="chatSendBtn" title="Send message">➔</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

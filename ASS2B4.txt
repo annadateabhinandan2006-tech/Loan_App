@@ -1,0 +1,35 @@
+namespace ASS2B4
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSubmit_Click(object sender, EventArgs e)
+        {
+            if (txtName.Text == "")
+            {
+                               MessageBox.Show("Please enter your name.");
+            }
+            else if (txtEmail.Text == "")
+            {
+                MessageBox.Show("Please enter your email.");
+            }
+            else if (txtPassword.Text == "")
+            {
+                MessageBox.Show("Please enter your phone number.");
+            }
+            else
+            {
+                MessageBox.Show("Thank you for submitting your information!");
+            }
+        }
+    }
+}
