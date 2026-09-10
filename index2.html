@@ -425,36 +425,42 @@
                 Start New Application
             </button>
         </div>
-    <!-- AI Chatbot Floating Trigger Button -->
-    <button type="button" class="chat-toggle-btn" id="chatToggleBtn" aria-label="Open AI Loan Assistant">
-        <span class="chat-toggle-icon">💬</span>
-        <span class="chat-toggle-label">Ask Loan AI</span>
-        <span class="chat-toggle-badge">Docs & Queries</span>
-    </button>
+    </div>
+
+    <!-- Floating Robo AI Agent in Right Corner -->
+    <div class="robo-agent-wrapper">
+        <div class="robo-hint-pill" onclick="toggleRoboChat()">
+            <span>🤖 Need Doc Alternatives? Ask Robo AI</span>
+        </div>
+        <button type="button" class="robo-trigger-btn" id="chatToggleBtn" onclick="toggleRoboChat()" aria-label="Open Robo AI Loan Assistant">
+            <span class="robo-icon-avatar">🤖</span>
+            <span class="robo-online-dot"></span>
+        </button>
+    </div>
 
     <!-- AI Chatbot Modal Container -->
     <div class="chatbox-modal" id="chatboxModal">
         <div class="chat-header">
             <div class="chat-header-info">
-                <div class="chat-avatar">⚡</div>
+                <div class="chat-avatar">🤖</div>
                 <div class="chat-header-text">
-                    <h3>LendSwift AI Assistant</h3>
-                    <div class="chat-status">Online • Instant Query & Doc Solver</div>
+                    <h3>Robo Loan AI Agent</h3>
+                    <div class="chat-status">Active • Instant Alternative Doc Solver</div>
                 </div>
             </div>
-            <button type="button" class="chat-close-btn" id="chatCloseBtn" title="Close Chat">✕</button>
+            <button type="button" class="chat-close-btn" id="chatCloseBtn" onclick="toggleRoboChat()" title="Close Chat">✕</button>
         </div>
 
         <div class="chat-doc-banner">
             <span>⚡ Missing mandatory paperwork?</span>
-            <button type="button" onclick="showAllAlternativeDocs()">Check Alternatives</button>
+            <button type="button" onclick="showAllAlternativeDocs()">Alternative Docs Guide</button>
         </div>
 
         <div class="chat-messages" id="chatMessages">
             <div class="chat-bubble bot">
-                <p>👋 Hello! I am your <strong>LendSwift Loan Assistant</strong>.</p>
+                <p>🤖 Greetings! I am your <strong>Robo AI Loan Assistant</strong>.</p>
                 <p style="margin-top: 6px; font-size: 12px; color: var(--purple-light);">
-                    Need help choosing loan products or don't have certain mandatory documents like <strong>Salary Slips, ITR, Marksheets, or Utility Bills</strong>? Ask me for verified alternative documents!
+                    I can solve any loan queries and provide <strong>authorized alternative documents</strong> if you don't have <strong>Salary Slips, ITR, Marksheets, or Utility Bills</strong>!
                 </p>
             </div>
         </div>
@@ -471,7 +477,7 @@
 
         <!-- Chat Input Bar -->
         <div class="chat-input-row">
-            <input type="text" id="chatInputField" placeholder="Type your query or document question..." autocomplete="off">
+            <input type="text" id="chatInputField" placeholder="Ask Robo AI about docs or loan..." autocomplete="off">
             <button type="button" class="chat-send-btn" id="chatSendBtn" title="Send message">➔</button>
         </div>
     </div>

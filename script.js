@@ -27,7 +27,7 @@ const DOCS_CONFIG = {
     ]
 };
 
-// Alternative Document Knowledge Base for Chatbot
+// Alternative Document Knowledge Base for Robo Chatbot
 const ALTERNATIVE_DOCS_KB = {
     salary: {
         title: "Salary Slip Alternative",
@@ -451,30 +451,23 @@ function resetApplication() {
 }
 
 /* ==========================================================================
-   AI LOAN ASSISTANT CHATBOT IMPLEMENTATION
+   ROBO AI AGENT CHATBOT CONTROLLER
    ========================================================================== */
-function setupChatbot() {
-    const toggleBtn = document.getElementById("chatToggleBtn");
+function toggleRoboChat() {
     const chatModal = document.getElementById("chatboxModal");
-    const closeBtn = document.getElementById("chatCloseBtn");
+    const inputField = document.getElementById("chatInputField");
+    if (!chatModal) return;
+    
+    const isVisible = chatModal.style.display === "flex";
+    chatModal.style.display = isVisible ? "none" : "flex";
+    if (!isVisible && inputField) {
+        setTimeout(() => inputField.focus(), 150);
+    }
+}
+
+function setupChatbot() {
     const sendBtn = document.getElementById("chatSendBtn");
     const inputField = document.getElementById("chatInputField");
-
-    if (toggleBtn && chatModal) {
-        toggleBtn.addEventListener("click", () => {
-            const isVisible = chatModal.style.display === "flex";
-            chatModal.style.display = isVisible ? "none" : "flex";
-            if (!isVisible && inputField) {
-                setTimeout(() => inputField.focus(), 150);
-            }
-        });
-    }
-
-    if (closeBtn && chatModal) {
-        closeBtn.addEventListener("click", () => {
-            chatModal.style.display = "none";
-        });
-    }
 
     if (sendBtn && inputField) {
         sendBtn.addEventListener("click", handleUserMessage);
@@ -499,7 +492,7 @@ function showAllAlternativeDocs() {
     appendUserMessage("Show all alternative documents for loan application");
     
     setTimeout(() => {
-        let content = `<p><strong>📋 LendSwift Verified Alternative Document Guidelines:</strong></p><p style="margin-top:4px; font-size:12px; color:var(--text-secondary);">If you don't have any primary document, you can upload any of these authorized replacements:</p>`;
+        let content = `<p><strong>🤖 Robo AI - Verified Alternative Document Guide:</strong></p><p style="margin-top:4px; font-size:12px; color:var(--text-secondary);">If you don't have any primary document, upload any of these authorized replacements:</p>`;
         
         for (const key in ALTERNATIVE_DOCS_KB) {
             const item = ALTERNATIVE_DOCS_KB[key];
@@ -514,7 +507,7 @@ function showAllAlternativeDocs() {
             `;
         }
         appendBotMessage(content);
-    }, 400);
+    }, 350);
 }
 
 function handleUserMessage() {
@@ -527,10 +520,9 @@ function handleUserMessage() {
     inputField.value = "";
     appendUserMessage(query);
     
-    // Process response
     setTimeout(() => {
         processBotQuery(query);
-    }, 450);
+    }, 400);
 }
 
 function appendUserMessage(text) {
@@ -558,11 +550,10 @@ function appendBotMessage(htmlContent) {
 function processBotQuery(userText) {
     const q = userText.toLowerCase();
 
-    // 1. Alternative Documents Specific checks
     if (q.includes("salary") || q.includes("payslip") || q.includes("pay slip") || q.includes("income slip")) {
         const item = ALTERNATIVE_DOCS_KB.salary;
         appendBotMessage(`
-            <p><strong>📄 Alternative for Salary Slip:</strong></p>
+            <p><strong>🤖 Alternative for Salary Slip:</strong></p>
             <p style="margin: 4px 0 8px; font-size:12px;">If you don't have your official monthly payslip, you can upload:</p>
             <div class="doc-alt-card">
                 <div class="doc-missing-tag">❌ ${item.missing}</div>
@@ -575,7 +566,7 @@ function processBotQuery(userText) {
     } else if (q.includes("itr") || q.includes("tax return") || q.includes("business return") || q.includes("balance sheet")) {
         const item = ALTERNATIVE_DOCS_KB.itr;
         appendBotMessage(`
-            <p><strong>📊 Alternative for ITR / Tax Returns:</strong></p>
+            <p><strong>🤖 Alternative for ITR / Tax Returns:</strong></p>
             <p style="margin: 4px 0 8px; font-size:12px;">If you haven't filed recent ITR or don't have audited balance sheets:</p>
             <div class="doc-alt-card">
                 <div class="doc-missing-tag">❌ ${item.missing}</div>
@@ -656,14 +647,14 @@ function processBotQuery(userText) {
         `);
     } else {
         appendBotMessage(`
-            <p>I can help you with questions about loan requirements and alternative documents. You can ask:</p>
+            <p>🤖 I am Robo AI! You can ask me anything about loan application requirements and alternative documents:</p>
             <ul style="margin: 8px 0 8px 16px; font-size: 12px; color: var(--purple-light);">
                 <li>"What can I submit instead of salary slip?"</li>
                 <li>"Business loan without ITR alternative?"</li>
                 <li>"Missing electricity bill for address?"</li>
                 <li>"Interest rates and tenure options"</li>
             </ul>
-            <button onclick="showAllAlternativeDocs()" style="margin-top:6px; background:linear-gradient(135deg, #9333ea, #c026d3); border:none; color:white; padding:6px 12px; border-radius:8px; font-size:11px; cursor:pointer; font-weight:700;">
+            <button onclick="showAllAlternativeDocs()" style="margin-top:6px; background:linear-gradient(135deg, #9333ea, #c026d3); border:none; color:white; padding:6px 14px; border-radius:8px; font-size:11px; cursor:pointer; font-weight:700;">
                 📋 View All Alternative Documents
             </button>
         `);

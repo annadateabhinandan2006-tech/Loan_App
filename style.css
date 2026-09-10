@@ -45,7 +45,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 30px 15px 100px;
+    padding: 30px 15px 120px;
 }
 
 .app-wrapper {
@@ -671,73 +671,99 @@ textarea:focus {
 }
 
 /* ==========================================================================
-   AI LOAN ASSISTANT & ALTERNATIVE DOCS CHATBOT WIDGET
-   ========================================================================== */
-.chat-toggle-btn {
+   ROBO AI AGENT FLOATING BUTTON & CHATBOX WIDGET
+   ========================================================================= */
+.robo-agent-wrapper {
     position: fixed;
     bottom: 24px;
     right: 24px;
-    z-index: 900;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.robo-hint-pill {
+    background: linear-gradient(135deg, #26134b 0%, #3b176e 100%);
+    border: 1px solid rgba(192, 132, 252, 0.5);
+    color: var(--purple-light);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(168, 85, 247, 0.3);
+    cursor: pointer;
+    animation: floatRoboHint 3s ease-in-out infinite;
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 14px 22px;
-    background: linear-gradient(135deg, #6b21a8 0%, #9333ea 50%, #c026d3 100%);
-    color: #FFFFFF;
-    border: 1px solid rgba(233, 213, 255, 0.5);
-    border-radius: 50px;
-    box-shadow: 0 8px 30px rgba(147, 51, 234, 0.5), 0 0 20px rgba(217, 70, 239, 0.4);
+    gap: 6px;
+}
+
+@keyframes floatRoboHint {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+.robo-trigger-btn {
+    position: relative;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #581c87 0%, #9333ea 50%, #d946ef 100%);
+    border: 2.5px solid #f3e8ff;
+    box-shadow: 0 8px 30px rgba(147, 51, 234, 0.6), 0 0 25px rgba(217, 70, 239, 0.5);
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    animation: pulseChatBtn 3s infinite;
+    animation: roboPulse 2.5s infinite;
 }
 
-@keyframes pulseChatBtn {
-    0% { transform: scale(1); box-shadow: 0 8px 30px rgba(147, 51, 234, 0.5); }
-    50% { transform: scale(1.04); box-shadow: 0 10px 40px rgba(217, 70, 239, 0.7), 0 0 25px rgba(168, 85, 247, 0.6); }
-    100% { transform: scale(1); box-shadow: 0 8px 30px rgba(147, 51, 234, 0.5); }
+@keyframes roboPulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.7); }
+    70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(168, 85, 247, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(168, 85, 247, 0); }
 }
 
-.chat-toggle-btn:hover {
-    transform: translateY(-3px) scale(1.06);
-    filter: brightness(1.15);
+.robo-trigger-btn:hover {
+    transform: scale(1.12);
+    filter: brightness(1.2);
 }
 
-.chat-toggle-icon {
-    font-size: 22px;
+.robo-icon-avatar {
+    font-size: 34px;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
 }
 
-.chat-toggle-label {
-    font-weight: 700;
-    font-size: 14px;
-    letter-spacing: 0.3px;
-}
-
-.chat-toggle-badge {
+.robo-online-dot {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
     background: #22c55e;
-    color: #ffffff;
-    font-size: 10px;
-    font-weight: 800;
-    padding: 2px 7px;
-    border-radius: 12px;
-    box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+    border: 2px solid #0f0a1f;
+    box-shadow: 0 0 8px #22c55e;
 }
 
 /* Chatbox Window Container */
 .chatbox-modal {
     position: fixed;
-    bottom: 90px;
+    bottom: 105px;
     right: 24px;
-    width: 400px;
+    width: 410px;
     height: 560px;
-    max-height: calc(100vh - 120px);
-    background: rgba(18, 12, 34, 0.95);
+    max-height: calc(100vh - 130px);
+    background: rgba(18, 12, 34, 0.96);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1.5px solid rgba(168, 85, 247, 0.4);
-    border-radius: 20px;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(168, 85, 247, 0.3);
-    z-index: 950;
+    border: 1.5px solid rgba(168, 85, 247, 0.45);
+    border-radius: 24px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(168, 85, 247, 0.35);
+    z-index: 10000;
     display: none;
     flex-direction: column;
     overflow: hidden;
@@ -750,8 +776,8 @@ textarea:focus {
 }
 
 .chat-header {
-    background: linear-gradient(135deg, #1b0e3b 0%, #30145c 100%);
-    padding: 16px 18px;
+    background: linear-gradient(135deg, #1f0f42 0%, #38156e 100%);
+    padding: 16px 20px;
     border-bottom: 1px solid rgba(168, 85, 247, 0.3);
     display: flex;
     justify-content: space-between;
@@ -761,23 +787,24 @@ textarea:focus {
 .chat-header-info {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 }
 
 .chat-avatar {
-    width: 36px;
-    height: 36px;
-    background: linear-gradient(135deg, #a855f7, #ec4899);
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #9333ea, #ec4899);
+    border: 1.5px solid #f3e8ff;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
-    box-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
+    font-size: 22px;
+    box-shadow: 0 0 14px rgba(168, 85, 247, 0.6);
 }
 
 .chat-header-text h3 {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 700;
     color: var(--text-primary);
 }
@@ -806,21 +833,21 @@ textarea:focus {
     color: var(--text-muted);
     font-size: 20px;
     cursor: pointer;
-    padding: 4px;
-    border-radius: 6px;
+    padding: 4px 8px;
+    border-radius: 8px;
     transition: all 0.2s ease;
 }
 
 .chat-close-btn:hover {
     color: var(--purple-light);
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15);
 }
 
 /* Document Helper Shortcut Banner */
 .chat-doc-banner {
-    background: linear-gradient(90deg, rgba(147, 51, 234, 0.25), rgba(217, 70, 239, 0.2));
-    border-bottom: 1px solid rgba(168, 85, 247, 0.2);
-    padding: 9px 14px;
+    background: linear-gradient(90deg, rgba(147, 51, 234, 0.3), rgba(217, 70, 239, 0.25));
+    border-bottom: 1px solid rgba(168, 85, 247, 0.25);
+    padding: 10px 16px;
     font-size: 12px;
     display: flex;
     justify-content: space-between;
@@ -829,20 +856,21 @@ textarea:focus {
 }
 
 .chat-doc-banner button {
-    background: rgba(168, 85, 247, 0.3);
-    border: 1px solid rgba(192, 132, 252, 0.5);
+    background: linear-gradient(135deg, #9333ea, #c026d3);
+    border: 1px solid rgba(243, 232, 255, 0.5);
     color: #ffffff;
     font-size: 11px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 14px;
     cursor: pointer;
     transition: all 0.2s ease;
+    box-shadow: 0 0 8px rgba(168, 85, 247, 0.4);
 }
 
 .chat-doc-banner button:hover {
-    background: var(--purple-bright);
-    color: #120726;
+    transform: scale(1.05);
+    filter: brightness(1.15);
 }
 
 /* Chat Messages Scroll Container */
@@ -866,7 +894,7 @@ textarea:focus {
 }
 
 .chat-bubble {
-    max-width: 85%;
+    max-width: 88%;
     padding: 12px 16px;
     border-radius: 16px;
     font-size: 13px;
@@ -881,11 +909,11 @@ textarea:focus {
 
 .chat-bubble.bot {
     align-self: flex-start;
-    background: rgba(30, 20, 56, 0.9);
-    border: 1px solid rgba(168, 85, 247, 0.35);
+    background: rgba(30, 20, 56, 0.95);
+    border: 1px solid rgba(168, 85, 247, 0.4);
     color: var(--text-primary);
     border-bottom-left-radius: 4px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .chat-bubble.user {
@@ -949,7 +977,7 @@ textarea:focus {
 
 /* Interactive Prompt Suggestions Chips */
 .chat-chips {
-    padding: 6px 14px 10px;
+    padding: 8px 14px 12px;
     display: flex;
     gap: 8px;
     overflow-x: auto;
@@ -963,12 +991,12 @@ textarea:focus {
 
 .chat-chip {
     white-space: nowrap;
-    background: rgba(36, 23, 66, 0.8);
+    background: rgba(36, 23, 66, 0.85);
     border: 1px solid rgba(168, 85, 247, 0.35);
     color: var(--purple-light);
     font-size: 11px;
     font-weight: 600;
-    padding: 6px 12px;
+    padding: 6px 14px;
     border-radius: 18px;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -984,7 +1012,7 @@ textarea:focus {
 /* Chat Input Row */
 .chat-input-row {
     padding: 12px 14px;
-    background: rgba(14, 9, 26, 0.95);
+    background: rgba(14, 9, 26, 0.98);
     border-top: 1px solid rgba(168, 85, 247, 0.25);
     display: flex;
     gap: 10px;
@@ -1038,9 +1066,13 @@ textarea:focus {
         padding: 22px 18px;
     }
     .chatbox-modal {
-        right: 10px;
-        left: 10px;
+        right: 12px;
+        left: 12px;
         width: auto;
-        bottom: 85px;
+        bottom: 95px;
+    }
+    .robo-agent-wrapper {
+        bottom: 16px;
+        right: 16px;
     }
 }
